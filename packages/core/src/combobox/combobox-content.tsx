@@ -83,9 +83,13 @@ export function ComboboxContent<T extends ValidComponent = "div">(
 	]);
 
 	const dismiss = () => {
-		context.resetInputValue(
-			context.listState().selectionManager().selectedKeys(),
-		);
+		if (context.isConstrained()) {
+			// we only reset the input value on dismiss if the combobox is constrained to have certain option values
+			context.resetInputValue(
+				context.listState().selectionManager().selectedKeys(),
+			);
+		}
+		
 		context.close();
 		setTimeout(() => {
 			context.close();
